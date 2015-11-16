@@ -1,3 +1,4 @@
+package eu.learnpad.ca.rest;
 
 /*
  * See the NOTICE file distributed with this work for additional
@@ -18,40 +19,44 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package eu.learnpad.ca.rest;
+
 
 
 import java.util.Collection;
 
-import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
 import eu.learnpad.ca.rest.data.collaborative.AnnotatedCollaborativeContentAnalysis;
 import eu.learnpad.ca.rest.data.collaborative.CollaborativeContentAnalysis;
 import eu.learnpad.exception.LpRestException;
 
-@Consumes(MediaType.APPLICATION_XML)
-@Produces(MediaType.APPLICATION_XML)
+//@Consumes(MediaType.APPLICATION_XML)
+//@Produces(MediaType.APPLICATION_XML)
+@Path("/learnpad/ca/validatecollaborativecontent")
 public interface ColloborativeContentVerifications {
-
 	
-	@Path("/validatecollaborativecontent")
+	
+	
+	@Path("/")
 	@POST
-	String putValidateCollaborativeContent(CollaborativeContentAnalysis contentFile)
+	String putValidateCollaborativeContent(@FormParam("collaborativecontent") CollaborativeContentAnalysis contentFile)
 				throws LpRestException;
 	
-	
-	@Path("/validatecollaborativecontent/{idAnnotatedCollaborativeContentAnalysis:.*}")
+	/*@Path("/")
+	@PUT
+	String updateValidateCollaborativeContent(@FormParam("collaborativecontent") CollaborativeContentAnalysis contentFile)
+				throws LpRestException;
+*/
+	@Path("/{idAnnotatedCollaborativeContentAnalysis:.*}")
 	@GET
 	Collection<AnnotatedCollaborativeContentAnalysis> getCollaborativeContentVerifications(@PathParam("idAnnotatedCollaborativeContentAnalysis") String contentID)
 			throws LpRestException;
 	
-	@Path("/validatecollaborativecontent/{idAnnotatedCollaborativeContentAnalysis:.*}/status")
+	@Path("/{idAnnotatedCollaborativeContentAnalysis:.*}/status")
 	@GET
 	String getStatusCollaborativeContentVerifications(@PathParam("idAnnotatedCollaborativeContentAnalysis") String contentID)
 			throws LpRestException;
